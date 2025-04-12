@@ -28,7 +28,7 @@ This **Water Requirement** Predictor is designed to help farmers and agricultura
   - Temperature range
   - Weather condition
 
-- **Recommends suitable crops** based on weather and soil — coming soon!
+- **Recommends suitable crops** based on weather and soil!
 
 #### 🧠 How it helps:
 - **Water Efficiency**: Know exactly how much to irrigate, saving water.
