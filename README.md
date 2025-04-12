@@ -1,6 +1,6 @@
 # AI-Powered-Water-Footprint-Calculator-for-Sustainable-Agriculture---HackerzStreet
 
-### 🌱 Welcome to AquaFootprint AI
+## 🌱 Welcome to AquaFootprint AI
 ### 🚀 The Project is Live!
 ### You can now try out the app live here : https://ai-powered-water-footprint-calculator.streamlit.app
 
