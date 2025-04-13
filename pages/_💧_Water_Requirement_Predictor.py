@@ -265,36 +265,45 @@ if "prediction_data" in st.session_state:
 
 
     if st.button("🤖 Recommend Crop"):
-        with st.spinner("🤖 Generating Crop Recommendation"):
-         time.sleep(6)
         prompt = f"""
-        You're an expert agricultural AI helping farmers.
+        You are an expert AI in agriculture and irrigation.
 
-        Based on the following conditions, recommend the single best crop from the list and explain why — in exactly        two plain English sentences. Do not include any formatting, code, or extra commentary. End your response    after the second sentence.
+        Based on the details provided, choose:
+        - The single most suitable crop from the list.
+        - The most appropriate irrigation method from the list.
         
-        Conditions:
+        Your answer must:
+        - Be written in plain, natural English
+        - Be exactly **two short sentences**
+        - Avoid any lists, formatting, code, or repetition
+        - Be concise and stop immediately after the second sentence
+        
+        Here are the conditions:
         - Area: {acres} acres
         - Available water: {available_water_kl} kiloliters
         - Soil type: {soil_type}
         - Weather: {weather}
-        - Region: {humidity}
+        - Humidity: {humidity}
         - Temperature: {temperature}°C
         
-        Available crops:
-        {", ".join(crop_options)}
+        Available crops: {", ".join(crop_options)}
+        Available irrigation methods: Drip irrigation, Sprinkler irrigation, Flood irrigation, Centre pivot         irrigation, Surface irrigation, Canal irrigation
+        
+        Answer:
         """
-
-        response = together.Complete.create(
-        prompt=prompt,
-        model="meta-llama/Llama-3.3-70B-Instruct-Turbo",
-        max_tokens=60,  
-        temperature=0.4  
+        with st.spinner("🤖 Generating Crop Recommendation"):
+            response = together.Complete.create(
+            prompt=prompt,
+            model="meta-llama/Llama-3.3-70B-Instruct-Turbo",
+            max_tokens=60,  
+            temperature=0.3
         )
-        recommended_crop = response['choices'][0]['text'].strip()
+        recommended_crop = response['choices'][0]['text'].strip().strip('"').strip("[]")
+        clean_text = recommended_crop.strip().strip('"').strip("[]").replace("```", "")
         st.markdown(f"""
     <div style='background-color: #e0ffe0; padding: 15px; border-radius: 10px; border: 1px solid #b2d8b2;'>
         <h4 style='color: #2e7d32;'>🌱 AI Recommendation:</h4>
-        <p style='font-size: 16px;color:#2e7d32;'>{recommended_crop}</p>
+        <p style='font-size: 16px;color:#2e7d32;'>{clean_text}</p>
     </div>
     """, unsafe_allow_html=True)
 
