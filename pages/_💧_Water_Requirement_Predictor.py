@@ -295,7 +295,7 @@ if "prediction_data" in st.session_state:
             response = together.Complete.create(
             prompt=prompt,
             model="meta-llama/Llama-3.3-70B-Instruct-Turbo",
-            max_tokens=100,  
+            max_tokens=90,  
             temperature=0.3
         )
         recommended_crop = response['choices'][0]['text'].strip().strip('"').strip("[]")
