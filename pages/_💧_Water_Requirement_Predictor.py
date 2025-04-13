@@ -265,19 +265,28 @@ if "prediction_data" in st.session_state:
 
 
     if st.button("🤖 Recommend Crop"):
+        def truncate_after_second_sentence(text):
+            parts = text.split('.')
+
+            if len(parts) >= 2:
+                return f"{parts[0].strip()}. {parts[1].strip()}."
+            elif len(parts) == 1:
+                return parts[0].strip() + '.'
+            else:
+                return text.strip()
         prompt = f"""
         You are an expert AI in agriculture and irrigation.
 
         Based on the details provided, choose:
         - The single most suitable crop from the list.
         - The most appropriate irrigation method from the list.
-        
+
         Your answer must:
         - Be written in plain, natural English
         - Be exactly **two short sentences**
         - Avoid any lists, formatting, code, or repetition
         - Be concise and stop immediately after the second sentence
-        
+
         Here are the conditions:
         - Area: {acres} acres
         - Available water: {available_water_kl} kiloliters
@@ -285,25 +294,26 @@ if "prediction_data" in st.session_state:
         - Weather: {weather}
         - Humidity: {humidity}
         - Temperature: {temperature}°C
-        
+
         Available crops: {", ".join(crop_options)}
         Available irrigation methods: Drip irrigation, Sprinkler irrigation, Flood irrigation, Centre pivot         irrigation, Surface irrigation, Canal irrigation
-        
+
         Answer:
         """
         with st.spinner("🤖 Generating Crop Recommendation"):
             response = together.Complete.create(
             prompt=prompt,
             model="meta-llama/Llama-3.3-70B-Instruct-Turbo",
-            max_tokens=90,  
+            max_tokens=100,  
             temperature=0.3
         )
         recommended_crop = response['choices'][0]['text'].strip().strip('"').strip("[]")
         clean_text = recommended_crop.strip().strip('"').strip("[]").replace("```", "")
+        cleaned_response = truncate_after_second_sentence(clean_text)
         st.markdown(f"""
     <div style='background-color: #e0ffe0; padding: 15px; border-radius: 10px; border: 1px solid #b2d8b2;'>
         <h4 style='color: #2e7d32;'>🌱 AI Recommendation:</h4>
-        <p style='font-size: 16px;color:#2e7d32;'>{clean_text}</p>
+        <p style='font-size: 16px;color:#2e7d32;'>{cleaned_response}</p>
     </div>
     """, unsafe_allow_html=True)
 
