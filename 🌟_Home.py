@@ -12,7 +12,7 @@ st.set_page_config(
 )
 
 # 🏠 App title
-st.title(" Smart Water Requirement Predictor")
+st.title("AquaFootprint AI for Sustainable Agriculture")
 st.subheader("Empowering Farmers with Data-Driven Decisions 🌾")
 
 
