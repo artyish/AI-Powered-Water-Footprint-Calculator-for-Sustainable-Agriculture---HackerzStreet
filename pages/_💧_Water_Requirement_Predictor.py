@@ -22,8 +22,8 @@ available_water_kl = ""
 
 
 current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-together.api_key = "939528084fd82f939d2fb65ae8d7738435751a8f048b9670e1cdebe55026729f"
-API_KEY = "ca427cf3782dcfec326df5af4f76b17f"
+together.api_key = st.secrets["API_KEY_T"]
+API_KEY = st.secrets["API_KEY_W"]
 
 st.title("🌱 Water Requirement Predictor")
 
